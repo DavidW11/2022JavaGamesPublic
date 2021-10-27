@@ -16,6 +16,8 @@ public class Gallows {
 		 * frame of the gallows. The given (xPos, yPos) specifies the
 		 * coordinates of the bottom left corner of the gallows.  
 		 */
+		
+		// create gallows
 		double baseLength = 100;
 		double beamLength = 300;
 		double crossbeamLength = 90;

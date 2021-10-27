@@ -17,8 +17,12 @@ public class Man {
 		 * The given (xPos, yPos) specifies the coordinates
 		 * for the top of the man's head.
 		 */
+		
+		// y coordinate for neck of man
 		double neckY = yPos + HEAD_SIZE;
+		// y coordinate for crotch of man
 		double bottomY = yPos + HEAD_SIZE + BODY_SIZE;
+		// create man
 		Line body = new Line(xPos, neckY, xPos, bottomY, canvas);
 		Line armRight = new AngLine(xPos, neckY + 30, ARM_LENGTH, 3.14/6, canvas);
 		Line armLeft = new AngLine(xPos, neckY + 30, ARM_LENGTH, 5*3.14/6, canvas);
@@ -70,6 +74,7 @@ public class Man {
 	}
 
 	public void erase(){
+		// to reset the man and start a new game
 		numIncorrect = 0;
 		clear();
 	}

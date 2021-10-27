@@ -15,7 +15,7 @@ public class RandomWord2 {
 		
 		try {
 			// read in lines for "words.txt" file
-			File obj = new File("/Users/DWang23/eclipse-workspace/Hangman/src/words2.txt");
+			File obj = new File("words2.txt");
 			Scanner reader = new Scanner(obj);
 			// concatenate all words in the file into a string
 			while (reader.hasNextLine()) {
@@ -37,7 +37,7 @@ public class RandomWord2 {
 		// return random word from the array
 		Random rand = new Random();
 		int i = rand.nextInt(WordList.length);
-		String randomword = WordList[i];
+		String randomword = WordList[i].toLowerCase();
 		return randomword;
 		
 	}
@@ -45,7 +45,7 @@ public class RandomWord2 {
 		public static void main (String[] args) {
 		// for testing purposes
 		RandomWord2 test = new RandomWord2();
-		System.out.println(test.chooseRandom());
+		System.out.println(test.chooseRandom().toLowerCase());
 		
 	}
 	
