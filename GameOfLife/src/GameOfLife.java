@@ -12,7 +12,7 @@ John Conway, the creator of the Game of Life, originally conjectured that no pat
 In other words, any initial pattern with a finite number of living cells cannot grow beyond some finite upper limit.
 The glider gun directly disproves this conjecture.
 
- 
+
 
  2.
 The fact that Life is turn based means that all cells must change at the same time. 
@@ -28,13 +28,17 @@ This temporary array must be updated after every ‘turn’.
  3.
 Making cell responsible for drawing FilledRect and Framed Rect would replace the grid array 
 of rectangles with a collection of individual rectangles. 
-While this would make interacting with individual cells more straightforward, 
+While this would make interacting with individual cells more straightforward
+(and the code more readable), 
 it would make manipulating the array of cells more complicated than it needs to be. 
 In order to iterate through the cells, a 2-D array that holds Cell objects 
 would have to be created in order to iterate through the cells, 
 which is necessary for liveNeighbors and the game logic. 
 Creating the rectangles in the cell class and then adding it to another array of cell object 
 is redundant, compared to simply creating an array of rectangles as we did in the grid class.
+Since many of the methods would be moved to the Cell class,
+the coder would also have to write extra code in the grid class
+which basically consists of method headers that call methods in the cell class.
 
 
 
@@ -49,8 +53,6 @@ all of the original values are copied over, and the original array is set to the
 The other way is to create an array list of array list of Framed Rectangles, 
 which will automatically extend the board size when needed.
 protected ArrayList<ArrayList<FilledRect>> grid2;
-
-
  
  */
 
