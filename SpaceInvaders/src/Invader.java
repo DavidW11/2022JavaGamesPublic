@@ -4,37 +4,34 @@ import objectdraw.*;
 // width 40
 // gap of 20 in between each
 
-public class Invader extends ActiveObject implements Shootable {
+public class Invader implements Shootable {
 
 	private VisibleImage inv;
 	private DrawingCanvas c;
-	private boolean running;
 	private final int WIDTH = 40;
-	private final int MOVEDISTANCE = 60;
-	
 	private ArrayList<VisibleImage> invaderTargets;
+	private SpaceInvaders si;
+	private ArrayList<Bullet> bullets;
+	private SoundPlayer p;
 	
-	
-	
-	public Invader ( Image i , double x , double y , DrawingCanvas c ) {
+	public Invader ( Image i , double x , double y , DrawingCanvas c, SpaceInvaders s) {
 		
-		
+		//create visible image of invader
 		inv = new VisibleImage(i, x, y, WIDTH, WIDTH, c);
+		//array of invader targets
 		invaderTargets = new ArrayList<VisibleImage>();
-		running = false;
+		//array of bullets shot by invader
+		bullets = new ArrayList<Bullet>();
+		si = s;
 		this.c = c;
 		
-		start();
-		
+		p = new SoundPlayer ("invshoot.wav");
 	}
 	
+	//add target of the invader 
 	public void addinvaderTarget(VisibleImage m) {
     	invaderTargets.add(m);
     }
-	
-	public void toggleRunning () {
-		running = !running;
-	}
 	
 	public VisibleImage getImage() {
 		return inv;
@@ -48,35 +45,18 @@ public class Invader extends ActiveObject implements Shootable {
 		return false;
 	}
 	
-	
-	public void die() {
-    	inv.removeFromCanvas();
-    }
-	
-	public void run() {
-		
-		while ( true ) {
-			
-			int direction = 1;
-			int speed = 700;
-					
-			while ( running ) {
-				speed += 100;
-				
-				for(int i = 0; i < 4; i++) {
-					// total width of array --> 540
-					// width of canvas --> 800
-					// subtract margin of 20
-					// 9 invaders across
-					// moves a total of 4 times --> 60 each time
-					inv.move(MOVEDISTANCE*direction, 0);
-					pause(speed);
-				}
-				
-				inv.move(0, MOVEDISTANCE);
-				direction *= -1;	
-				pause(speed);
-			}
+	//erase all the bullets shot from invader
+	public void eraseBullets() {
+		for (Bullet b : bullets) {
+			b.getImage().hide();
 		}
+		bullets = new ArrayList<Bullet>();
+	}
+	
+	//the invader shoots, add bullet to bullets array
+	public void shoot() {
+		
+		bullets.add(new Bullet ( inv.getX() + inv.getWidth()/2 - 2 , inv.getY() + 40 , c, this, si));
+		p.play();
 	}
 }
