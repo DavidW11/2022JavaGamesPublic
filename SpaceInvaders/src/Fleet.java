@@ -12,7 +12,7 @@ public class Fleet extends ActiveObject {
 	private SpaceInvaders si;
 	private boolean running;
 	private DrawingCanvas canvas;
-	private static int speed = 700;
+	private static int speed = 800;
 	
 	public Fleet ( Image a, Image b, Image c, Image d, Image e, Image f, DrawingCanvas canvas, SpaceInvaders s) {
 		
@@ -146,19 +146,20 @@ public class Fleet extends ActiveObject {
 				
 				//if the invader has reached the bottom of the screen, end the game, invaders win
 				// or if any of the front row invaders touch the ship
+				boolean lost = false;
 				for (Invader i : frontRow()) {
 					for (VisibleImage vi : i.getTargets()) {
 						if (i.getImage().getLocation().getY() + i.getImage().getHeight() >= canvas.getHeight() ||
 								i.getImage().overlaps(vi)) {
-							System.out.println("Score 1" + calcScore());
-							si.endGame(false);
+							lost = true;
 						}
 					}
 				}
-					
-				
+				if (lost) {
+					si.endGame(false);
+				}
 				//if score is 540 end the game, mothership wins
-				if (calcScore() >= 540) {
+				else if (calcScore() >= 540) {
 					si.endGame(true);
 				}
 				

@@ -8,13 +8,71 @@
  * 
  * Laser (like colonizers, does it overlap with the target)
  * 
- * Shootable Interface (used by both invaders and spaceship, parameter for shooting at space ship or invader)
+ * Shootable Interface (used by both invaders and spaceship)
+ * We used this interface to pass in which type of ship, invader or mothership, is the one shooting
+ * for the Bullet class
+ * We passed in a Shootable object and used methods outlined by the interface to access its targets
+ * and determine if it is a mothership or invader
+ * Another way to use this class would be to make the targets an array of Shootable objects, and utilize
+ * its functionality accordingly, but we went implemented the first option.
+ */
+
+/* Thought Questions:
+ * 
+ * 1) 
+ * For its release in 1978, Space Invaders introduced unique game features that undoubtedly
+ * contributed to its success. Space Invaders popularized the shooting game concept, with
+ * opponents that move and fight back, introducing a level of skill and strategy. The game also
+ * brought a competitive atmosphere, by recording global/arcade achievements with a leader board.
+ * The time limited aspect of the game, as Invaders slowly speed up, was also a novel and captivating
+ * idea. This concept puts the user under pressure, increasing both frustration from losing and motivation
+ * to win.I also think that the recognizable music and sounds of the game added to the its
+ * success.
+ * 
+ * 
+ * 2)
+ * I would make a new class called Base, that displays a visible image on a certain location on the screen.
+ * The class would include an integer instance variable that tracks its health. After 3 bases are initialized
+ * in SpaceInvaders at the start of the game, they are all added to the target array of both the ship and the 
+ * invaders. As the Bullet class checks if it overlaps with one of the targets, if the target is a Base object,
+ * the bullet will hide itself and the class will call a mutator method in the Base class 
+ * that decreases its health. Using an accessor method, if the health is 0, hide the Base image from the screen.
+ *  
+ * If I wanted to also have parts of the Base be removed by the Bullet, I would make the Base a collection of small 
+ * Filled Rectangles, and remove the rectangle from the position that the bullet collides with it.
+ * 
+ * 
+ * 
+ * 3)
+ * I would create new class called ufo that when constructed, would created a visible image that shows a ufo. 
+ * It would extend Active Object and the run method would move it from one side of the screen to any other. 
+ * ufo class will be Shootable and everytime the bullet moves it will check if it has hit ufo, the ufo will be 
+ * added to the mothership’s targets. If the ufo makes it across the screen, 
+ * call a function in the base class that destroys the base. If the bullet does overlap with the ufo,
+ * hide the ufo and the bullet.
+ */
+
+/* Extensions:
+ * 
+ * User can select between 3 different speeds at the beginning of each game
+ * If the user does not select anything, the same speed as the last game is kept,
+ * and if it is the first game, the default speed is 2 (medium difficulty)
+ * 
+ * 
+ * Music and Sounds:
+ * Invader shooting
+ * Mothership shooting
+ * Background music
+ * Invader hit
+ * Mothership hit
  * 
  */
+
 
 import objectdraw.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.util.ArrayList;
 
 public class SpaceInvaders extends WindowController implements KeyListener {
 
@@ -41,6 +99,7 @@ public class SpaceInvaders extends WindowController implements KeyListener {
 	protected Text speedText;
 	
 	private SoundPlayer p;
+	private boolean setup;
 	
 	// remember whether a key is currently depressed
 	private boolean keyDown = false;
@@ -87,6 +146,8 @@ public class SpaceInvaders extends WindowController implements KeyListener {
 		requestFocus();
 		addKeyListener(this);
 		canvas.addKeyListener(this);
+		
+		setup = true;
 	}
 
 	
@@ -127,6 +188,8 @@ public class SpaceInvaders extends WindowController implements KeyListener {
 			}
 			
 			f.addFleetTarget(ship);
+			
+			setup = false;
 		}
 		
 		if (but1.contains(l) && !diff1.isHidden()) {
@@ -144,7 +207,9 @@ public class SpaceInvaders extends WindowController implements KeyListener {
 	
 	// Handle the arrow keys by telling the ship to go in the direction of the arrow.
 	public void keyTyped(KeyEvent e) {
-
+		
+		if (!setup) {
+			
 		if ( e.getKeyCode() == KeyEvent.VK_SPACE || 
 				 e.getKeyCode() == KeyEvent.VK_UP ) {
 				
@@ -165,9 +230,13 @@ public class SpaceInvaders extends WindowController implements KeyListener {
 			
         }
 	}
+		
+	}
 
 	// Remember that the key is no longer down.
 	public void keyReleased(KeyEvent e) {
+		
+		if (!setup) {
 		
 		if (e.getKeyCode() == KeyEvent.VK_LEFT ) {
 
@@ -188,6 +257,8 @@ public class SpaceInvaders extends WindowController implements KeyListener {
 		    // insert code to handle key release (optional stopping of base)
 		}
 	}
+		
+	}
 
 	// Handle the pressing of the key the same as typing.
 	public void keyPressed(KeyEvent e) {
@@ -203,7 +274,6 @@ public class SpaceInvaders extends WindowController implements KeyListener {
 	public void endGame(boolean win) {
 		
 		int score = f.calcScore();
-		System.out.println("Score 2" + score);
 		f.endGame();
 		ship.eraseBullets();
 		ship.getImage().hide();
@@ -246,6 +316,12 @@ public class SpaceInvaders extends WindowController implements KeyListener {
 		but2.show();
 		but3.show();
 		speedText.show();
+		
+		setup = true;
+	}
+	
+	public ArrayList<Bullet> getMotherBullets() {
+		return ship.getBullets();
 	}
 	
     public static void main(String[] args) { 

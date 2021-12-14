@@ -79,7 +79,9 @@ public class Mothership extends ActiveObject implements Shootable {
 		bullets = new ArrayList<Bullet>();
 	}
 	
-	
+	public ArrayList<Bullet> getBullets() {
+		return bullets;
+	}
 	public void run() {
 		
 		//movement of the mothership

@@ -70,10 +70,19 @@ public class Bullet extends ActiveObject {
         					
         				}
         			}
-        			
-    
         		}
         		
+        		if (!ship.isMothership()) {
+        			for (Bullet bull : si.getMotherBullets()) {
+            			if (b.overlaps(bull.getImage())) {
+            				if (!b.isHidden() && !bull.getImage().isHidden()) {
+            					b.hide();
+            					bull.getImage().hide();
+            				}
+            			}
+            		}
+        		}
+
         		//move upwards if bullet is shot from mothership and move downwards if bullet is shot from mothership
         		if (ship.isMothership()) {
         			b.move(0,-3);
