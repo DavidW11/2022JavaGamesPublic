@@ -50,7 +50,7 @@ public class World<E> {
 	 * @post returns true if pos is an (x,y) location in the bounds of
 	 *       the board.
 	 */
-	boolean inRange(Position pos)  {
+	boolean inRange(Position pos) {
 		return (pos.getX() <= (width()-1) &&
 				pos.getX() >= 0 &&
 				pos.getY() <= (height()-1) &&

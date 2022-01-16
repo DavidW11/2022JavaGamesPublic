@@ -34,25 +34,41 @@ public class Creature {
 	 *		 instruction to begin executing
 	 * @post displays the creature on the world map
      */
+	
+	private Species species;
+	private World<Creature> world;
+	private Position pos;
+	private int dir;
+	// keeps track of which step its on
+	private int stepNum;
+	
     public Creature(Species species, World<Creature> world, Position pos, int dir) {
+    	this.species = species;
+    	this.world = world;
+    	this.pos = pos;
+    	this.dir = dir;
+    	stepNum = 1;
 	}
 
     /**
      * Return the species of the creature.
      */
     public Species species() {
+    	return species;
 	}
 
     /**
      * Return the current direction of the creature.
      */
     public int direction() {
+    	return dir;
     }
 
     /**
      * Return the position of the creature.
      */
     public Position position() {
+    	return pos;
     }
 
     /**
@@ -63,6 +79,36 @@ public class Creature {
 	 *
      */
     public void takeOneTurn() {
+    	
+    	Instruction instr = species.programStep(stepNum);
+    	Position oldPos = pos;
+    	
+    	switch(instr.getOpcode()) {
+    	case Instruction.HOP :
+    		if (world.inRange(pos.getAdjacent(dir))) 
+    			pos = pos.getAdjacent(dir);
+    		break;
+    	
+    	default:
+    		System.out.println("BAD OPCODE");	
+    	}
+    	
+    	WorldMap.displaySquare(oldPos, ' ', 0, "white");
+    	world.set(pos,this);
+    	WorldMap.displaySquare(pos, 'h', dir, "red");
+    	
 	}
-
+    
+    /*
+    public static void main(String[] args) {
+    	WorldMap.createWorldMap(11, 11);
+    	World<Creature> w = new World<Creature>(11,11);
+    	Position pos = new Position(3,3);
+    	Species species = new Species("Hop.txt");
+    	int dir = 0;
+    	
+    	Creature test = new Creature(species, w, pos, dir);
+    	test.takeOneTurn();
+    }
+	*/
 }
