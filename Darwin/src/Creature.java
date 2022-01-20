@@ -273,7 +273,6 @@ public class Creature {
             default:
         		System.out.println("BAD OPCODE");
         	}
-        	// fix infect error
     	}
 	}
 }

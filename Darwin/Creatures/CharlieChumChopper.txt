@@ -1,12 +1,12 @@
 CharlieChumChopper
 magenta
-ifenemy 13
+ifenemyright 13
 ifwall 6
 ifsame 6
 hop
 go 1
 right
-ifenemy 13
+ifenemyright 13
 ifwall 11
 ifsame 11
 hop

@@ -90,6 +90,10 @@ class Darwin {
     	World<Creature> w = new World<Creature>(15,15);
     	
 		ArrayList<Creature> creatureList = new ArrayList<Creature>();
+		
+		// testing:
+		//ArrayList<String> testArray = new ArrayList<String>();
+		//testArray.add("Rover.txt");
 
 		// for each species passed in, create 10 creatures of that species
 		for (String speciesFile : s) {
@@ -108,33 +112,24 @@ class Darwin {
 
 		simulate(creatureList);
 		
-		
     	/*
-    	//initial testing: 
+    	// testing:
     	
-    	Position pos1 = new Position(10,10);
+    	Position pos1 = new Position(0,0);
     	Position pos2 = new Position(0,0);
-		int dir = 0;
-		
+		int dir2 = 1;
+		int dir1 = 3;
 		Species testSpecies1 = new Species("Rover.txt");
 		Species testSpecies2 = new Species("Flytrap.txt");
-		Creature test1 = new Creature(testSpecies1, w, pos1, dir);
-		Creature test2 = new Creature(testSpecies2, w, pos2, dir);
+		Creature test1 = new Creature(testSpecies1, w, pos1, dir1);
+		Creature test2 = new Creature(testSpecies1, w, pos2, dir2);
 		
 		ArrayList<Creature> testing = new ArrayList<Creature>();
 		testing.add(test1);
 		testing.add(test2);
 		simulate(testing);
-		
-		
-		boolean needNewPos = true;
-				while(needNewPos) {
-					randPos = new Position((int)Math.random()*(w.width()-1),
-											   (int)Math.random()*(w.height()-1));
-					
-					if (w.get(randPos) == null) needNewPos = false;
-				}
 		*/
+		
 	}
 	
 	public static void simulate(ArrayList<Creature> creatures) {
@@ -142,7 +137,7 @@ class Darwin {
 			for (Creature c : creatures) {
 				c.takeOneTurn();
 			}
-		WorldMap.pause(1000);
+		WorldMap.pause(100);
 		}
 	}
 }
