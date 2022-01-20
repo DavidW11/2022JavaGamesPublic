@@ -53,6 +53,9 @@ public class Instruction {
 	public static final int DEC = 14;
 	/** opcode for set **/
 	public static final int SET=15;
+	
+	public static final int IFENEMYLEFT=16;
+	public static final int IFENEMYRIGHT=17;
 
 	protected int opcode; /** the opcode */
 	protected int address; /** the address */

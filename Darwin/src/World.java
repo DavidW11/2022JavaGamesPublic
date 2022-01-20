@@ -1,5 +1,3 @@
-import structure5.Matrix;
-
 /**
  * This module includes the functions necessary to keep track of the creatures
  * in a two-dimensional world. In order for the design to be general, the
@@ -11,9 +9,12 @@ import structure5.Matrix;
  * about ten lines of code to this file.
  */
 
+import structure5.Matrix;
+
 public class World<E> {
 	
-	Matrix<E> m;
+	// matrix that represents the world
+	private Matrix<E> m;
 	
 	/**
 	 * This function creates a new world consisting of width 
@@ -26,7 +27,8 @@ public class World<E> {
 	 */
 	
 	public World(int w, int h)  {
-		
+		// height is the number of rows
+		// width is the number of columns
 		m = new Matrix<E>(h,w);
 	}
 
@@ -82,10 +84,8 @@ public class World<E> {
 		}
 	}
 
-	
+	// testing
 	public static void main(String[] args) {
-		// tests
-		
 		World<Integer> test = new World<Integer>(4,5);
 		if (test.height() == 5) {
 			System.out.println("1:Pass");

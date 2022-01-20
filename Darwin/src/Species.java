@@ -1,8 +1,3 @@
-import java.util.ArrayList;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.util.Scanner;
-
 /**
  * The individual creatures in the world are all representatives of some
  * species class and share certain common characteristics, such as the species
@@ -24,6 +19,11 @@ import java.util.Scanner;
  * 
  * Note: The instruction addresses start at one, not zero.
  */
+
+import java.util.ArrayList;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
 
 public class Species {
 	
@@ -57,24 +57,23 @@ public class Species {
 					break;
 				}
 				
-				// every next line advances cursor
+				// set name
 				if (counter == 0) {
-					// set name
 					name = line;
 				}
+				// set color
 				else if (counter == 1) {
-					// set color
 					color = line;
 				}
+				// set instructions
 				else {
-					// set instructions
 					// split line into opcode and address
 					String[] instructions = line.split(" ");
-					// run opEncode method to turn into opcode int
+					// run opEncode helper method to turn into opcode int
 					int opcode = opEncode(instructions[0]);
-					
-					int address;
 					// set address
+					int address;
+					// if no address, set address to 1
 					if (instructions.length == 1) {
 						address = 1;
 					}
@@ -88,11 +87,9 @@ public class Species {
 					
 					// add new Instruction to list
 					instr.add(new Instruction(opcode, address));
-					
 				}
 				counter ++;
 			}	
-			
 			reader.close();
 		}
 		catch (FileNotFoundException e) {
@@ -100,7 +97,6 @@ public class Species {
 		      e.printStackTrace();
 		}
 	}
-	
 
 	/**
 	 * Return the name of the species.
@@ -145,45 +141,51 @@ public class Species {
 		return program;
 	}
 	
+	// turn opcode string into int
 	public int opEncode(String opString) {
 		switch (opString) {
 		case "hop" :
-			return 1;
+			return Instruction.HOP;
 		case "left" :
-			return 2;
+			return Instruction.LEFT;
 		case "right" :
-			return 3;
+			return Instruction.RIGHT;
 		case "infect" :
-			return 4;
+			return Instruction.INFECT;
 		case "ifempty" :
-			return 5;
+			return Instruction.IFEMPTY;
 		case "ifwall" :
-			return 6;
+			return Instruction.IFWALL;
 		case "ifsame" :
-			return 7;
+			return Instruction.IFSAME;
 		case "ifenemy" :
-			return 8;
+			return Instruction.IFENEMY;
 		case "ifrandom" :
-			return 9;
+			return Instruction.IFRANDOM;
 		case "go" :
-			return 10;
+			return Instruction.GO;
 		case "iftwoenemy" :
-			return 11;
+			return Instruction.IFTWOENEMY;
 		case "ifeq" :
-			return 12;
+			return Instruction.IFEQ;
 		case "inc" :
-			return 13;
+			return Instruction.INC;
 		case "dec" :
-			return 14;
+			return Instruction.DEC;
 		case "set" :
-			return 15;
+			return Instruction.SET;
+			
+		case "ifenemyleft" :
+			return Instruction.IFENEMYLEFT;
+		case "ifenemyright" :
+			return Instruction.IFENEMYRIGHT;
 		default : 
 			return 16;
 		}
 	}
 	
+	// testing
 	public static void main (String[] args) {
-		// testing
 		Species test = new Species("Hop.txt");
 	    System.out.println("name: " + test.getName());
 	 	System.out.println("color: " + test.getColor());
