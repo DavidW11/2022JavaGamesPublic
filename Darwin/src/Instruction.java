@@ -52,7 +52,8 @@ public class Instruction {
 	/** opcode to decrement memory **/
 	public static final int DEC = 14;
 	/** opcode for set **/
-	public static final int SET=15;
+	// increased set to account for extensions
+	public static final int SET=18;
 	
 	public static final int IFENEMYLEFT=16;
 	public static final int IFENEMYRIGHT=17;

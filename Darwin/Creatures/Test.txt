@@ -1,0 +1,9 @@
+Test
+magenta
+ifenemyright 4
+ifenemyleft 4
+ifsame 4
+left
+go 1
+
+
