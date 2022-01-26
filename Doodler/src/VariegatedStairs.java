@@ -28,7 +28,7 @@ public class VariegatedStairs implements StairInterface {
 			topSquare = new VariegatedStairs(topOrigin, sideLength/2, colorNum - 30, canvas);
 			rightSquare = new VariegatedStairs(rightOrigin, sideLength/2, colorNum - 30, canvas);
 		}
-		// if less than 3, create empty stairs
+		// if less than 3, use base class to create empty stairs
 		else {
 			topSquare = new EmptyStairs();
 			rightSquare = new EmptyStairs();

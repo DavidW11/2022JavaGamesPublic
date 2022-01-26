@@ -1,6 +1,6 @@
 import objectdraw.*;
 import java.awt.Color;
-// TODO ADD COLOR
+
 public class ComplexTriangleDoodle implements TriangleDoodle {
 	
 	// lines of the triangle
@@ -37,7 +37,8 @@ public class ComplexTriangleDoodle implements TriangleDoodle {
 		double er = v2.distanceTo(v3);
 		double eb = v1.distanceTo(v2);
 		
-		// if any edges are longer than x pixels, create new complex triangles
+		// if any edges are longer than x pixels, use recursion to 
+		// create new complex triangles
 		if (el > 30 || er > 30 || eb > 30) {
 			tl = new ComplexTriangleDoodle(v1, mb, ml, Color.RED, canvas);
 			tr = new ComplexTriangleDoodle(mb, v2, mr, Color.BLUE, canvas);
