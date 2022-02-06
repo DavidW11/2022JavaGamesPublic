@@ -1,3 +1,29 @@
+/* Thought Questions: 
+ * 
+ * 1)
+ * The RevComparator compare method will return the opposite (negative) value 
+ * of the original comparator (passed into the constructor). 
+ * In other words, the comparator reverses the comparison. 
+ * When the MyVector of Integer objects is sorted using the RevComparator (with
+ * an IntegerComparator passed in its constructor), the MyVector will be
+ * sorted in the reverse order of how it would be sorted if an IntegerComparator
+ * was used.
+ * If the IntegerComparator would have sorted in ascending order, 
+ * the RevComparator will sort in descending order, and vice versa.
+ * 
+ * 2)
+ * I would add a private instance variable to our comparator of type Comparator.
+ * Let's call this Comparator instance variable kingComparator.
+ * In the compare method of our comparator, call the compare method of kingComparator,
+ * which is safe because kingComparator is type Comparator — an interface that requires
+ * a compare method.
+ * In mutator methods inside of our comparator, set the kingComparator to other
+ * comparators that implement Comparator, thus changing the functionality of our compare method
+ * and the "mode" of our comparator.
+ * This is because our compare method calls kingComparator's compare method, 
+ * which is the compare method of whichever comparator the kingComparator is currently set to. 
+ */
+
 import java.util.Scanner;
 import java.io.*;
 
