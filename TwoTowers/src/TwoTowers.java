@@ -1,10 +1,16 @@
 /* Thought Questions:
  * 
  * 1)
- * 
+ * Best Solution: 1 2 3 7 8 9 14 15
+ * (and 4 5 6 10 11 12 13)
  * 
  * 2)
- * 
+ * On each call of the get() method in SubsetIterator, I would use Math.random() to 
+ * randomly generate a counter between 0 and 2^n - 1. I would keep the same logic that
+ * checks for the subset closest to h/2, but instead of a while(si.haxNext()) loop, I would
+ * check if a variable time, measured in milliseconds, is less than 1000.
+ * For each iteration of the loop, update the time using System.currentTimeMillis().
+ * When the loop ends, print the closest subset.
  * 
  */
 
@@ -16,37 +22,34 @@ public class TwoTowers {
 	private static Vector<Double> tower;
 	
 	public static void main(String[] args) {
+		
 		// vector of block heights from sqrt(1) to sqrt(N)
 		tower = new Vector<Double>();
-		for(int i = 1; i<N; i++) {
+		for(int i = 1; i<=N; i++) {
 			tower.add(Math.sqrt(i));
 		}
 		
 		SubsetIterator si = new SubsetIterator(tower);
 		
-		// create vector of subsets
-		Vector<Vector<Double>> subsets= new Vector<Vector<Double>>();
-		while (si.hasNext()) {
-			subsets.add(si.next());
-		}
-		
 		// find the smallest difference between the height of a subset and total height/2
-		double smallestDiff = diff(subsets.get(0));
+		double smallestDiff = sum(tower);
 		// remember the subset that gets the closest
-		Vector<Double> towerA = subsets.get(0);
-		for(int i = 0; i<subsets.size(); i++) {
-				if( diff(subsets.get(i)) < smallestDiff ) {
-					smallestDiff = diff(subsets.get(i));
-					towerA = subsets.get(i);
-				}
+		Vector<Double> towerA = new Vector<Double>();
+		while (si.hasNext()) {
+			Vector<Double> nextSub = si.next();
+			if( diff(nextSub) < smallestDiff ) {
+				smallestDiff = diff(nextSub);
+				towerA = nextSub;
+			}
 		}
 		
 		// print results
-		System.out.print("Best Tower: ");
+		System.out.println("Best Towers: ");
 		printTower(towerA);
+		printTower(otherTower(towerA, tower));
 		
 		System.out.print("Height Difference: ");
-		System.out.println(smallestDiff);
+		System.out.println(smallestDiff*2);
 	}
 	
 	// finds sum of a vector
@@ -69,5 +72,24 @@ public class TwoTowers {
 			System.out.print(Math.round(Math.pow(d, 2)) + " ");
 		}
 		System.out.println();
+	}
+	
+	// forms the second tower based on the first tower
+	public static Vector<Double> otherTower(Vector<Double> firstTower, Vector<Double> totalTower) {
+		Vector<Double> otherTower = new Vector<Double>();
+		// if an item is not in the first tower but in the total tower, put in the second tower
+		for(Double d : totalTower) {
+			boolean inList = false;
+			for(Double i : firstTower) {
+				if(d==i) {
+					inList = true;
+					break;
+				}
+			}
+			if(inList == false) {
+				otherTower.add(d);
+			}
+		}
+		return otherTower;
 	}
 }
