@@ -20,4 +20,8 @@ public class Move {
 	public String toString() {
 		return startPole.toString() + " to " + endPole.toString();
 	}
+	
+	public boolean equals(Move m) {
+		return startPole.equals(m.startPole) && endPole.equals(m.endPole);
+	}
 }

@@ -2,7 +2,7 @@ import java.util.LinkedList;
 import java.util.Queue;
 import objectdraw.*;
 
-public class MoveAction {
+public class MoveAction extends ActiveObject{
 	
 	private Queue<Move> auto;
 	private int numBlocks = 0;
@@ -19,6 +19,18 @@ public class MoveAction {
 		solve(numBlocks, startPole, endPole, auxPole);
 	}
 	
+	public void run() {
+		for(Move m : getAuto()) {
+			m.getEnd().add(m.getStart().getTop());
+			m.getStart().remove();
+			TowersOfHanoi.incNumMoves();
+			pause(500);
+		}
+	}
+	
+	public void solve() {
+		solve(numBlocks, startPole, endPole, auxPole);
+	}
 	
 	public void solve(int n, Pole startPole, Pole endPole, Pole auxPole) {
 		if (n == 0) {

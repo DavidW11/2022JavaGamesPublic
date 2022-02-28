@@ -5,7 +5,7 @@ import java.awt.event.KeyListener;
 import java.util.Scanner;
 import java.util.Stack;
 
-public class TowersOfHanoi extends WindowController implements KeyListener{
+public class TowersOfHanoi extends WindowController implements KeyListener {
 	
 	private FilledRect background;
 	private Text undoText;
@@ -17,12 +17,19 @@ public class TowersOfHanoi extends WindowController implements KeyListener{
 	private Text autoplayText;
 	private FramedRect autoplayBut;
 	
+	private Text trainingText;
+	private Text victoryText;
+	
+	private static int numMoves;
+	private static Text movesText;
+	
 	private Block selectedBlock;
 	private Location current;
 	private Pole previousPole;
 	private Stack<Move> moveHistory;
 	private MoveAction ma;
-	private int numMoves;
+	private boolean suboptimal;
+	private int suboptimalMoves;
 	
 	private final static int WIDTH = 800;
 	private final static int HEIGHT = 800;
@@ -51,17 +58,32 @@ public class TowersOfHanoi extends WindowController implements KeyListener{
 		resetBut = new FramedRect(resetText.getX() - 10, resetText.getY() - 10, 
 				resetText.getWidth() + 20, resetText.getHeight() + 20, canvas);
 		
-		p1 = new Pole(new Location(150, 600), "p1", canvas);
-		p2 = new Pole(new Location(400, 600), "p2", canvas);
-		p3 = new Pole(new Location(650, 600), "p3", canvas);
+		trainingText = new Text("", 10, 50, canvas);
+		trainingText.setFontSize(15);
+		trainingText.setColor(Color.red);
+		movesText = new Text("Number of Moves: " + numMoves, 10, 10, canvas);
+		movesText.setFontSize(20);
+		victoryText = new Text("", 10, canvas.getHeight() - 50, canvas);
+		victoryText.setFontSize(20);
+		victoryText.setColor(Color.green);
+		
+		p1 = new Pole(new Location(150, 600), "l", canvas);
+		p2 = new Pole(new Location(400, 600), "m", canvas);
+		p3 = new Pole(new Location(650, 600), "r", canvas);
 		
 		moveHistory = new Stack<Move>();
+		suboptimal = false;
 		
 		setBlocks(3);
 		
 		requestFocus();
 		addKeyListener(this);
 		canvas.addKeyListener(this);
+	}
+	
+	public static void incNumMoves() {
+		numMoves++;
+		movesText.setText("Number of Moves: " + numMoves);
 	}
 	
 	public void setBlocks(int num) {
@@ -76,17 +98,27 @@ public class TowersOfHanoi extends WindowController implements KeyListener{
 	}
 	
 	public void autoplay() {
-		for(Move m : ma.getAuto()) {
-			m.getEnd().add(m.getStart().getTop());
-			m.getStart().remove();
-			//pause(100);
+		trainingText.setText("");
+		for(int i = suboptimalMoves; i>0; i--) {
+			undo();
+			suboptimalMoves--;
 		}
+		ma.start();
 	}
 	
 	public void undo() {
-		Move lastMove = moveHistory.pop();
-		lastMove.getStart().add(lastMove.getEnd().getTop());
-		lastMove.getEnd().remove();
+		if(moveHistory.size() > 0) {
+			Move lastMove = moveHistory.pop();
+			lastMove.getStart().add(lastMove.getEnd().getTop());
+			lastMove.getEnd().remove();
+		}
+		if(suboptimal) suboptimalMoves --;
+		if(suboptimalMoves == 0) {
+			trainingText.setText("");
+			suboptimal = false;
+		}
+		numMoves--;
+		movesText.setText("Number of Moves: " + numMoves);
 	}
 	
 	public void reset() {
@@ -98,6 +130,12 @@ public class TowersOfHanoi extends WindowController implements KeyListener{
 		for (int i = moveHistory.size(); i>0; i--) {
 			moveHistory.pop();
 		}
+		suboptimal = false;
+		suboptimalMoves = 0;
+		numMoves = 0;
+		trainingText.setText("");
+		movesText.setText("Number of Moves: " + numMoves);
+		victoryText.setText("");
 		setBlocks(Block.getNumBlocks());
 	}
 	
@@ -105,8 +143,12 @@ public class TowersOfHanoi extends WindowController implements KeyListener{
 		
 	}
 	
-	public boolean win() {	
+	public boolean win() {
 		return p3.win();
+	}
+	
+	public void animate(Pole p) {
+		p.animate();
 	}
 	
 	public void keyTyped(KeyEvent e) {
@@ -162,14 +204,57 @@ public class TowersOfHanoi extends WindowController implements KeyListener{
 			if(selectedBlock.onPole(p1) && p1.validMove(selectedBlock)) {
 				p1.add(selectedBlock);
 				moveHistory.push(new Move(previousPole, p1));
+				incNumMoves();
+				
+				// check if move does not match optimal move
+				if(!suboptimal && !moveHistory.peek().equals(ma.getAuto().peek())) {
+					
+					trainingText.setText("Suboptimal");
+					suboptimal = true;
+				}
+				else if(!suboptimal) {
+					ma.getAuto().poll();
+				}
+				if(suboptimal) suboptimalMoves++;
 			}
 			else if(selectedBlock.onPole(p2) && p2.validMove(selectedBlock)) {
 				p2.add(selectedBlock);
 				moveHistory.push(new Move(previousPole, p2));
+				incNumMoves();
+				
+				if(!suboptimal && !moveHistory.peek().equals(ma.getAuto().peek())) {
+					
+					trainingText.setText("Suboptimal");
+					suboptimal = true;
+				}
+				else if(!suboptimal) {
+					ma.getAuto().poll();
+				}
+				if(suboptimal) suboptimalMoves++;
 			}
 			else if(selectedBlock.onPole(p3) && p3.validMove(selectedBlock)) {
 				p3.add(selectedBlock);
 				moveHistory.push(new Move(previousPole, p3));
+				incNumMoves();
+				
+				if(!suboptimal && !moveHistory.peek().equals(ma.getAuto().peek())) {
+					
+					trainingText.setText("Suboptimal");
+					suboptimal = true;
+				}
+				else if(!suboptimal) {
+					ma.getAuto().poll();
+				}
+				if(suboptimal) suboptimalMoves++;
+				
+				// check for win
+				if(win()) {
+					animate(p3);
+					String message = "";
+					if(!suboptimal) message += "You Got the Best Possible Score!";
+					else message += "You Won! Try Again for a Better Score.";
+					victoryText.setText(message);
+				}
 			}
 			else {
 				previousPole.add(selectedBlock);

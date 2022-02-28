@@ -81,6 +81,10 @@ public class Block {
 	public int getBlockNum() {
 		return blockNum;
 	}	
+	
+	public void changeColor() {
+		block.setColor(Color.yellow);
+	}
 
 	public String toString() {
 		int num = numBlocks - blockNum + 1;

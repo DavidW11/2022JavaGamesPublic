@@ -81,6 +81,13 @@ public class Pole {
 		if(pole.size() == Block.getNumBlocks()) return true;
 		else return false;
 	}
+	
+	public void animate() {
+		while(!pole.isEmpty()) {
+			pole.pop().changeColor();
+			//pause(100)
+		}
+	}
 
 	public String toString() {
 		
