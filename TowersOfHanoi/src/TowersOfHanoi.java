@@ -28,6 +28,7 @@ public class TowersOfHanoi extends WindowController implements KeyListener {
 	private Pole previousPole;
 	private Stack<Move> moveHistory;
 	private MoveAction ma;
+	private Animate animate;
 	private boolean suboptimal;
 	private int suboptimalMoves;
 	
@@ -73,6 +74,7 @@ public class TowersOfHanoi extends WindowController implements KeyListener {
 		
 		moveHistory = new Stack<Move>();
 		suboptimal = false;
+		animate = new Animate(p3);
 		
 		setBlocks(3);
 		
@@ -148,7 +150,7 @@ public class TowersOfHanoi extends WindowController implements KeyListener {
 	}
 	
 	public void animate(Pole p) {
-		p.animate();
+		animate.start();
 	}
 	
 	public void keyTyped(KeyEvent e) {

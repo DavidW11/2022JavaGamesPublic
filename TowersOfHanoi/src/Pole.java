@@ -82,11 +82,8 @@ public class Pole {
 		else return false;
 	}
 	
-	public void animate() {
-		while(!pole.isEmpty()) {
-			pole.pop().changeColor();
-			//pause(100)
-		}
+	public Stack<Block> getPole() {
+		return pole;
 	}
 
 	public String toString() {
