@@ -353,8 +353,9 @@ public class TowersOfHanoi extends WindowController implements KeyListener {
 	
 	public static void main(String[] args) {
 		
-		if(args.length > 0 && args[0] == "--cli") {
+		if(args.length > 0 ) {
 			new TowersOfHanoi().simulate();
+			System.out.println("Hi");
 		}
 		else {
 			new TowersOfHanoi().startController(WIDTH, HEIGHT);
