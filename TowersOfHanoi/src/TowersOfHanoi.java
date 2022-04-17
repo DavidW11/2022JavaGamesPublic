@@ -266,19 +266,25 @@ public class TowersOfHanoi extends WindowController implements KeyListener {
 		}
 	}
 	
-	public void simulate() {
+	public static void simulate() {
 		Scanner s = new Scanner(System.in);
 		
 		System.out.println("Welcome to Towers of Hanoi");
 		System.out.print("Number of Blocks: ");
-		Pole startPole = new Pole(new Location(0,0), canvas);
-		Pole endPole = new Pole(new Location(0,0), canvas);
 
+		Stack<Integer> startPole = new Stack<Integer>();
+		Stack<Integer> endPole = new Stack<Integer>();
 		
+		Stack<Integer> p1 = new Stack<Integer>();
+		Stack<Integer> p2 = new Stack<Integer>();
+		Stack<Integer> p3 = new Stack<Integer>();
+				
 		boolean win = false;
-		begin();
 		
-		setBlocks(s.nextInt());
+		int numB = s.nextInt();
+		for(int i = numB; i>0; i--) {
+			p1.push(i);
+		}
 		System.out.println(p1);
 		System.out.println(p2);
 		System.out.println(p3);
@@ -294,17 +300,14 @@ public class TowersOfHanoi extends WindowController implements KeyListener {
 				
 				if(start == 0 && !p1.isEmpty()) {
 					startPole = p1;
-					selectedBlock = p1.getTop();
 					setup = false;
 				}
 				else if(start == 1 && !p2.isEmpty()) {
 					startPole = p2;
-					selectedBlock = p2.getTop();
 					setup = false;
 				}
 				else if(start == 2 && !p3.isEmpty()) {
 					startPole = p3;
-					selectedBlock = p3.getTop();
 					setup = false;
 				}
 				else {
@@ -335,16 +338,25 @@ public class TowersOfHanoi extends WindowController implements KeyListener {
 				}
 				else {
 					System.out.println("Invalid Input");
+					continue;
+				}
+				
+				if(endPole.size() == 0 || startPole.peek() < endPole.peek()) {
+					endPole.add(startPole.pop());
+					setup2 = false;
+				}
+				else {
+					System.out.println("Invalid Input");
+					setup2 = true;
 				}
 			}
 			
-			endPole.add(startPole.remove());
 			System.out.println("Current Game: ");
 			System.out.println(p1);
 			System.out.println(p2);
 			System.out.println(p3);
 			
-			if (win()) {
+			if (p3.size() == numB) {
 				System.out.println("You Won!");
 				win = true;
 			}
@@ -353,9 +365,9 @@ public class TowersOfHanoi extends WindowController implements KeyListener {
 	
 	public static void main(String[] args) {
 		
-		if(args.length > 0 ) {
-			new TowersOfHanoi().simulate();
-			System.out.println("Hi");
+		if(args.length > 0 && args[0]=="--cli") {
+			System.out.println("wfewe");
+			TowersOfHanoi.simulate();
 		}
 		else {
 			new TowersOfHanoi().startController(WIDTH, HEIGHT);
