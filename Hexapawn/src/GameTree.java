@@ -29,9 +29,10 @@
  * always player 2. 
  * 
  * 3)
- * The HexMove class would have an addition method that returns the mirror move, which can be calculated using
- * the board size, the to and from coordinates, and simple arithmetic. The HexBoard class would have
- * and additional instance variable that keeps track of the reverse board, using the reverse move functionality.
+ * The HexMove class would have an addition method that returns the mirror move (mirrored across the vertical access), 
+ * which can be calculated using the board size, the to and from coordinates, and simple arithmetic. 
+ * The HexBoard class would have an additional instance variable that keeps track of the reverse board, 
+ * using the reverse move functionality. 
  * Each board in the GameTree would represent both a board state and its reflection, and pruning a GameTree
  * would also prune its reflection.
  */
