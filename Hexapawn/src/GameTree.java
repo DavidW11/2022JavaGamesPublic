@@ -14,7 +14,7 @@
  * of trials (around 1000), the computer player has pruned the tree so that no matter where
  * the random player first moves, the computer player's move options all result in a winning strategy.
  * After pitting two computer players against each other, I found a similar result:
- * not only did the second player always win, but the first player has pruned its own tree to only
+ * not only did the second player more frequently win, but the first player has pruned its own tree to only
  * the root node, suggesting that every single move of the first computer player has resulted in a loss.
  * Both of these experiments support the conclusion that the second player has a winning strategy no matter where
  * the first player moves. Thus, because H.E.R moves second, H.E.R will win more frequently. 
@@ -25,14 +25,14 @@
  * the second player immediately resigns, suggesting that all moves from that position result in a loss.
  * A 3 x 5 board, after conducting the same test, produces very similar results, the only different being that
  * because the computer players take more trials to prune a larger game tree, the frequency of player 1 wins slightly 
- * increases. Thus, for larger boards, one player still seems to develop a winning strategy, however, that player is not
+ * decreases. Thus, for larger boards, one player still seems to develop a winning strategy, however, that player is not
  * always player 2. 
  * 
  * 3)
  * The HexMove class would have an addition method that returns the mirror move, which can be calculated using
  * the board size, the to and from coordinates, and simple arithmetic. The HexBoard class would have
- * and additional instance variable that keeps track of the reverse board, using the reverse move method.
- * Each board in the GameTree would thus represent both a board state and its reflection, and pruning a GameTree
+ * and additional instance variable that keeps track of the reverse board, using the reverse move functionality.
+ * Each board in the GameTree would represent both a board state and its reflection, and pruning a GameTree
  * would also prune its reflection.
  */
 
