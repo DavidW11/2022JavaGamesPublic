@@ -26,15 +26,14 @@
  * A 3 x 5 board, after conducting the same test, produces very similar results, the only different being that
  * because the computer players take more trials to prune a larger game tree, the frequency of player 1 wins slightly 
  * decreases. Thus, for larger boards, one player still seems to develop a winning strategy, however, that player is not
- * always player 2. 
+ * always player 2.
  * 
  * 3)
  * The HexMove class would have an addition method that returns the mirror move (mirrored across the vertical access), 
  * which can be calculated using the board size, the to and from coordinates, and simple arithmetic. 
- * The HexBoard class would have an additional instance variable that keeps track of the reverse board, 
- * using the reverse move functionality. 
- * Each board in the GameTree would represent both a board state and its reflection, and pruning a GameTree
- * would also prune its reflection.
+ * The HexBoard class would have an additional method that returns the reverse board using the reverse move functionality. 
+ * For each board if the game tree, add the board if the reflection is not already in the tree, and prune both the board 
+ * and its reflection when the computer player loses.
  */
 
 import structure5.ReadStream;
