@@ -6,6 +6,8 @@ import java.io.*;
 
 public class Canvas extends WindowController {
 	
+	private final String file = "Gnozzio.jpeg";
+	
 	private static final int WIDTH = 1100;
 	private static final int HEIGHT = 800;
 	
@@ -26,7 +28,7 @@ public class Canvas extends WindowController {
 		
 		BufferedImage in;
 		try {
-			in = ImageIO.read(new File("Gnozzio.jpeg"));
+			in = ImageIO.read(new File(file));
 			
 			BufferedImage scaled = SquareArray.toBufferedImage( 
 					in.getScaledInstance(IMGWIDTH,IMGHEIGHT,Image.SCALE_REPLICATE) );

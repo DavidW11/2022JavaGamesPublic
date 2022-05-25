@@ -7,7 +7,7 @@ import java.util.Map;
 
 public class SquareArray {
 	
-	private final int BOXWIDTH = 15;
+	private final int BOXWIDTH = 20;
 	private final int THRESHOLD = 30;
 			
 	private Square[][] arr;
@@ -19,6 +19,7 @@ public class SquareArray {
 	public SquareArray(BufferedImage bimg, DrawingCanvas canvas) {
 		
 		palate = new HashMap<Integer, Integer>();
+		
 		fillCount = 0;
 		completed = false;
 		
@@ -36,7 +37,7 @@ public class SquareArray {
 				BufferedImage subimg = bimg.getSubimage(x, y, BOXWIDTH, BOXWIDTH);
 				
 				// get scaled instance
-				BufferedImage scaled = toBufferedImage( subimg.getScaledInstance(1,1,Image.SCALE_REPLICATE) );
+				BufferedImage scaled = toBufferedImage( subimg.getScaledInstance(1,1,Image.SCALE_AREA_AVERAGING) );
 				
 				// find color of scaled instance
 				int c = scaled.getRGB(0, 0);
