@@ -7,7 +7,7 @@ import java.util.Map;
 
 public class SquareArray {
 	
-	private final int BOXWIDTH = 20;
+	private static int BOXWIDTH = 15;
 	private final int THRESHOLD = 30;
 			
 	private Square[][] arr;
@@ -116,6 +116,16 @@ public class SquareArray {
 	
 	public boolean completed() {
 		return completed;
+	}
+	
+	public static void incWidth() {
+		BOXWIDTH += 10;
+	}
+	
+	public static void decWidth() {
+		if(BOXWIDTH>10) {
+			BOXWIDTH -= 10;
+		}
 	}
 	
 	public static void main(String[] args) {

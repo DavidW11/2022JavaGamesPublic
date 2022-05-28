@@ -6,7 +6,7 @@ import java.io.*;
 
 public class Canvas extends WindowController {
 	
-	private final String file = "Gnozzio.jpeg";
+	private final String file = "colorfulcat.jpeg";
 	
 	private static final int WIDTH = 1100;
 	private static final int HEIGHT = 800;
@@ -23,8 +23,13 @@ public class Canvas extends WindowController {
 	private Square lastColor;
 	
 	private Text winText;
+	
+	private FramedRect inc;
+	private FramedRect dec;
 
 	public void begin() {
+		
+		canvas.disableAutoRepaint();
 		
 		BufferedImage in;
 		try {
@@ -59,10 +64,18 @@ public class Canvas extends WindowController {
 				}
 			}
 			
+			int buttonWidth = 80;
+			inc = new FramedRect(canvas.getWidth()-2*PADDING-2*buttonWidth, PADDING, buttonWidth, PADDING, canvas);
+			Text incText = new Text("Easier", canvas.getWidth()-PADDING-2*buttonWidth, PADDING, canvas);
+			dec = new FramedRect(canvas.getWidth()-PADDING-buttonWidth, PADDING, buttonWidth, PADDING, canvas);
+			Text decText = new Text("Harder", canvas.getWidth()-buttonWidth, PADDING, canvas);
+			
+			
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
+		canvas.repaint();
 	}
 	
 	public void onMouseClick(Location pointer) {
@@ -88,6 +101,17 @@ public class Canvas extends WindowController {
 					}
 				}
 			}
+		}
+		
+		if(inc.contains(pointer)) {
+			SquareArray.incWidth();
+			canvas.clear();
+			begin();
+		}
+		if(dec.contains(pointer)) {
+			SquareArray.decWidth();
+			canvas.clear();
+			begin();
 		}
 	}
 	
