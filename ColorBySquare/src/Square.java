@@ -22,7 +22,7 @@ public class Square {
 		outline = new FramedRect(x,y,width,width,canvas);
 		this.color = color;
 		
-		fill();
+		//fill();
 	}
 	
 	public void fill() {

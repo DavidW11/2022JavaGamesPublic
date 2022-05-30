@@ -6,7 +6,7 @@ import java.io.*;
 
 public class Canvas extends WindowController {
 	
-	private final String file = "colorfulcat.jpeg";
+	private final String file = "flower1.jpg";
 	
 	private static final int WIDTH = 1100;
 	private static final int HEIGHT = 800;
@@ -29,7 +29,7 @@ public class Canvas extends WindowController {
 
 	public void begin() {
 		
-		canvas.disableAutoRepaint();
+		//canvas.disableAutoRepaint();
 		
 		BufferedImage in;
 		try {
@@ -75,7 +75,7 @@ public class Canvas extends WindowController {
 			e.printStackTrace();
 		}
 		
-		canvas.repaint();
+		//canvas.repaint();
 	}
 	
 	public void onMouseClick(Location pointer) {
